@@ -4,7 +4,12 @@ import './burger.css';
 
 
 const burger=(props)=>{
-    const transformedIngredients= Object.keys(props.ingredients);  //this is a fucntion defined in javascript not in react
+    const transformedIngredients= Object.keys(props.ingredients)         //this is a fucntion defined in javascript not in react
+    .map(igKey=>{
+        return [...Array(props.ingredients[igKey])].map((_,i)=>{
+               return <BurgerIngredient key={igKey+i} type={igKey}/>;
+        });
+    }); 
     
     
 
@@ -13,10 +18,7 @@ const burger=(props)=>{
         <div className='Burger'>
             {console.log(transformedIngredients)}
             <BurgerIngredient type='bread-top' />
-            <BurgerIngredient type='cheese' /> 
-            <BurgerIngredient type='meat' />
-            <BurgerIngredient type='bacon' />
-            <BurgerIngredient type='salad'/>
+            {transformedIngredients}
             <BurgerIngredient type='bread-bottom' />
         </div>
     );
