@@ -17,7 +17,12 @@ const buildControls=(props)=>{
     return(
     <div className='BuildControls'>
         {controls.map(ctrl=>(
-            <BuildControl key={ctrl.label} label={ctrl.label}/>
+            <BuildControl
+             key={ctrl.label}
+             label={ctrl.label} 
+             added={()=>props.ingredientAdded(ctrl.type)} 
+             removed={()=>props.ingredientRemoved(ctrl.type)}
+            />//type will be used in ingredient handler funtion so it need to be passed
         ))}
 
     </div>
