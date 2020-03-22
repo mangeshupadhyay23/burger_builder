@@ -14,6 +14,7 @@ const controls=[
 
 
 const buildControls=(props)=>{
+    console.log(props.disabled);
     return(
     <div className='BuildControls'>
         <p> Current Price:<strong>${props.price.toFixed(2)}</strong></p>
@@ -26,7 +27,7 @@ const buildControls=(props)=>{
              disabled={props.disabled[ctrl.type]}
             />//type will be used in ingredient handler funtion so it need to be passed
         ))}
-        <button className='OrderButton'>ORDER NOW</button>
+        <button className='OrderButton' disabled={props.orderdisability}>ORDER NOW</button>
     </div>
     );
 

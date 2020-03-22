@@ -58,6 +58,18 @@ class BurgerBuilder extends React.Component{
             
         
     }
+
+    orderelgiblity(){
+        for(let key in this.state.ingredients){
+            if(this.state.ingredients[key]===0){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+    }
     
     
 
@@ -65,7 +77,10 @@ class BurgerBuilder extends React.Component{
         let disabledInfo={...this.state.ingredients}
         for(let key in disabledInfo){
             disabledInfo[key]=disabledInfo[key]===0; //it will run a loop and check each key in ingredient state if disabledInfo will be less than equal to zero then diabledInfo[key] will be true or else it will be false
-        }
+        };
+       
+        
+       
         console.log(disabledInfo);
         return(
                 <div className='content'>
@@ -73,6 +88,7 @@ class BurgerBuilder extends React.Component{
                     <Burger ingredients={this.state.ingredients}/> 
                     <BuildControls
                     disabled={disabledInfo}
+                    orderdisability={this.orderelgiblity}
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     price={this.state.totalPrice}
