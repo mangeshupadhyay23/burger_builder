@@ -2,7 +2,8 @@ import React from 'react';
 import './burger builder.css';
 import Burger from '../../components/burger/Burger';
 import BuildControls from '../../components/burger/build controls/build_controls';
-
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/burger/order summary/ordersummary';
 
 const INGREDIENT_PRICES={
     salad:0.5,
@@ -88,7 +89,9 @@ class BurgerBuilder extends React.Component{
         console.log(disabledInfo);
         return(
                 <div className='content'>
-                    
+                    <Modal>
+                        <OrderSummary ingredients={this.state.ingredients}/>
+                    </Modal>
                     <Burger ingredients={this.state.ingredients}/> 
                     <BuildControls
                     disabled={disabledInfo}
@@ -97,6 +100,7 @@ class BurgerBuilder extends React.Component{
                     ingredientRemoved={this.removeIngredientHandler}
                     price={this.state.totalPrice}
                     />
+                    
                 </div>
         );
     }
