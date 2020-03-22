@@ -28,7 +28,7 @@ const buildControls=(props)=>{
              disabled={props.disabled[ctrl.type]}
             />//type will be used in ingredient handler funtion so it need to be passed
         ))}
-        <button className='OrderButton' disabled={props.orderdisability}>ORDER NOW</button>
+        <button className='OrderButton' disabled={props.orderdisability} onClick={props.ordered}>ORDER NOW</button>
     </div>
     );
 

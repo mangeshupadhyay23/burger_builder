@@ -23,7 +23,8 @@ class BurgerBuilder extends React.Component{
             meat:0,
         },
         totalPrice:4,
-        purchasable:true
+        purchasable:true,
+        purchasing:false
         
     }
     purchasability=(price)=>{
@@ -71,9 +72,13 @@ class BurgerBuilder extends React.Component{
         
     }
 
+    purchaseHandler=()=>{
+        this.setState({purchasing:true});
+    }
     
-    
-    
+    purchaseCancelHandler=()=>{
+        this.setState({purchasing:false});
+    }
     
 
     render(){
@@ -89,7 +94,7 @@ class BurgerBuilder extends React.Component{
         console.log(disabledInfo);
         return(
                 <div className='content'>
-                    <Modal>
+                    <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
                         <OrderSummary ingredients={this.state.ingredients}/>
                     </Modal>
                     <Burger ingredients={this.state.ingredients}/> 
@@ -99,6 +104,7 @@ class BurgerBuilder extends React.Component{
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     price={this.state.totalPrice}
+                    ordered={this.purchaseHandler}
                     />
                     
                 </div>

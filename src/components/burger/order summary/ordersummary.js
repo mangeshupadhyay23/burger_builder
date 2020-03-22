@@ -1,9 +1,10 @@
 import React from 'react';
+import './order summary.css';
 
 const orderSummary=(props)=>{
     const  ingredientsummary=Object.keys(props.ingredients)
             .map(igkey=>{
-                return <li key={igkey}>
+                return <li key={igkey   }>
                     <span style={{textTransform:'capitalize'}}
                     >{igkey}
                     </span>:{props.ingredients[igkey]}
@@ -18,6 +19,8 @@ const orderSummary=(props)=>{
                 {ingredientsummary}
             </ul>
             <p>Continue to checkout?</p>
+            <button className='Button'>CANCEL</button>
+            <button>CONTINUE</button>
         </div>
     );
 };
