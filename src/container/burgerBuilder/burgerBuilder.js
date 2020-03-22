@@ -3,6 +3,7 @@ import './burger builder.css';
 import Burger from '../../components/burger/Burger';
 import BuildControls from '../../components/burger/build controls/build_controls';
 
+
 const INGREDIENT_PRICES={
     salad:0.5,
     bacon:0.7,
@@ -21,7 +22,16 @@ class BurgerBuilder extends React.Component{
             meat:0,
         },
         totalPrice:4,
+        purchasable:true
         
+    }
+    purchasability=(price)=>{
+        if(price<=4){
+            this.setState({purchasable:true})
+        }
+        else{
+            this.setState({purchasable:false})
+        }
     }
 
 
@@ -35,7 +45,8 @@ class BurgerBuilder extends React.Component{
         const priceAddition =INGREDIENT_PRICES[type];//price to be added is stored as priceAddition 
         const oldPrice=this.state.totalPrice;        //totalPrice is base price and stored as oldPrice 
         const newPrice=oldPrice + priceAddition;     //newPrice is made equal to oldPrice + price of that ingredient to be added
-        this.setState({ingredients:updatedIngredients,totalPrice:newPrice}) //now the states are actually  changed from the copy 
+        this.setState({ingredients:updatedIngredients,totalPrice:newPrice}); //now the states are actually  changed from the copy 
+        this.purchasability(newPrice);
     }
 
     removeIngredientHandler=(type)=>{
@@ -55,32 +66,25 @@ class BurgerBuilder extends React.Component{
                 const oldPrice=this.state.totalPrice;        //totalPrice is base price and stored as oldPrice 
                 const newPrice=oldPrice - priceDeduction;     //newPrice is made equal to oldPrice + price of that ingredient to be added
                 this.setState({ingredients:updatedIngredients,totalPrice:newPrice}) //now the states are actually  changed from the copy 
-            
+                this.purchasability(newPrice);
         
     }
 
-    orderelgiblity(){
-        for(let key in this.state.ingredients){
-            if(this.state.ingredients[key]===0){
-                return true;
-            }
-            else{
-                return false;
-            }
-
-        }
-    }
+    
+    
     
     
 
     render(){
+        
         let disabledInfo={...this.state.ingredients}
         for(let key in disabledInfo){
             disabledInfo[key]=disabledInfo[key]===0; //it will run a loop and check each key in ingredient state if disabledInfo will be less than equal to zero then diabledInfo[key] will be true or else it will be false
         };
        
         
-       
+        
+        console.log(this.state.totalPrice);
         console.log(disabledInfo);
         return(
                 <div className='content'>
@@ -88,7 +92,7 @@ class BurgerBuilder extends React.Component{
                     <Burger ingredients={this.state.ingredients}/> 
                     <BuildControls
                     disabled={disabledInfo}
-                    orderdisability={this.orderelgiblity}
+                    orderdisability={this.state.purchasable}
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     price={this.state.totalPrice}
