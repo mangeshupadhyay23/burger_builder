@@ -9,7 +9,7 @@ const sideDrawer=(props)=>{
 
     return(
         <div className="SideDrawer">
-            <div className='Logo'>
+            <div className='ResposnsiveLogo'>
                 <Logo/>
             </div>
             <nav>

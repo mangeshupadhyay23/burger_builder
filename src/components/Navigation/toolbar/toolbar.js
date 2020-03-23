@@ -7,7 +7,7 @@ const toolBar=(props)=>{
     return(
         <header className='Toolbar'>
             <div>MENU</div>
-            <div className='Logo'>
+            <div className='ResponsiveLogo'>
                 <Logo/>
             </div>
             <nav>

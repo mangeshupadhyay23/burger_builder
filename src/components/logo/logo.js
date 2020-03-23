@@ -4,7 +4,7 @@ import './logo.css';
 
 const logo=(props)=>{
     return(
-        <div className='Logo'>
+        <div className='Logo' style={{height:props.height}}>
             <img src={burgerLogo} alt="My Burger Builder"></img>
         </div>
     );
