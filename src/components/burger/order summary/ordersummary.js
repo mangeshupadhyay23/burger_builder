@@ -1,5 +1,6 @@
 import React from 'react';
-import './order summary.css';
+import DangerButton from '../../UI/button/danger button';
+import SuccessButton from '../../UI/button/success button';
 
 const orderSummary=(props)=>{
     const  ingredientsummary=Object.keys(props.ingredients)
@@ -19,8 +20,8 @@ const orderSummary=(props)=>{
                 {ingredientsummary}
             </ul>
             <p>Continue to checkout?</p>
-            <button className='Button'>CANCEL</button>
-            <button>CONTINUE</button>
+            <DangerButton clicked={props.purchaseCancelled}>CANCEL</DangerButton>
+            <SuccessButton clicked={props.purchaseContinued}>CONTINUE</SuccessButton> 
         </div>
     );
 };
