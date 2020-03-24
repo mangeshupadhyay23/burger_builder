@@ -3,6 +3,7 @@
     box-sizing: border-box;
     display: flex;
     height: 100%;
+    width:auto;
     align-items: center;
 }
 
@@ -23,9 +24,9 @@
     border-bottom: 4px solid #40A4c8;
     color:white;
 }
-@media (min-width:500px){
+@media (max-width:500px){
     .NavigationItem{
-        margin: 10px 0;
+        margin: 1px 0;
         display: block;
         width : 100%;
        
@@ -34,15 +35,22 @@
     .NavigationItem a{
         color:#8f5c2c;
         text-decoration: none;
+        padding: none;
         width: 100%;
+        box-sizing: border-box;
         display: block;
     }
     
-    .NavigationItem a:hover,
-    .NavigationItem a:active,
+    .NavigationItem a:hover{
+        color:#40A4c8 ;
+    }
+    .NavigationItem a:active{
+        color: #40A4c8;
+    }
     .NavigationItem a.active{
         
         color:#40A4c8;
     }
 
 }
+

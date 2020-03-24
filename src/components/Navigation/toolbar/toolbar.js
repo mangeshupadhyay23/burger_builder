@@ -10,7 +10,7 @@ const toolBar=(props)=>{
             <div className='ResponsiveLogo'>
                 <Logo/>
             </div>
-            <nav>
+            <nav className='DesktopOnly'>
                 <NavigationItems/>
             </nav>
         </header>
