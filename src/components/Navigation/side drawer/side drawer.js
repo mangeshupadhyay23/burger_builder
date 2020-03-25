@@ -6,15 +6,15 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 
 
 const sideDrawer=(props)=>{
-    let idEle='Close'
+    let attechedClasses=['SideDrawer','Close'];
     if(props.open){
-        idEle='Open ';
+        attechedClasses=['SideDrawer','Open'];
     }
-
+    console.log(attechedClasses.join(' '))
     return(
         <div>
             <Backdrop show={props.open} clicked={props.closed}/>
-            <div className='SideDrawer' id={idEle}>
+            <div className={attechedClasses.join(' ')}>
                 <div className='ResposnsiveLogo'>
                     <Logo/>
                 </div>
