@@ -5,6 +5,10 @@ import SuccessButton from '../../UI/button/success button';
 
 class  OrderSummary extends React.Component{
    
+    UNSAFE_componentWillUpdate(){
+        console.log('ORDER SUMMARY WILL UPDATE0');//order summary re render when ingredient changes
+    }
+
 
    render(){
         const  ingredientsummary=Object.keys(this.props.ingredients)
