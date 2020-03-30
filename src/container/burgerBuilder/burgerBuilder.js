@@ -1,9 +1,13 @@
 import React from 'react';
 import './burger builder.css';
+import axios from '../../axios-orders';
 import Burger from '../../components/burger/Burger';
 import BuildControls from '../../components/burger/build controls/build_controls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/burger/order summary/ordersummary';
+import Spinner from '../../components/UI/spinner/spinner';
+import withErrorHandler from '../../HOC/withErrorHandler/withErrorHandler';
+
 
 const INGREDIENT_PRICES={
     salad:0.5,
@@ -16,17 +20,23 @@ const INGREDIENT_PRICES={
 class BurgerBuilder extends React.Component{
 
     state={
-        ingredients:{        //ingredients is an object not an array so javascript cannot read individual items and values in it  
-            salad:0,         //so we will use a pre defined function in javascript in burger.js file
-            bacon:0,
-            cheese:0,
-            meat:0,
-        },
+        ingredients:null,   //ingredients is an object not an array so javascript cannot read individual items and values in it  
+                          //so we will use a pre defined function in javascript in burger.js file
         totalPrice:4,
         purchasable:true,
-        purchasing:false
+        purchasing:false,
+        loading:false
         
     }
+
+    componentDidMount(){
+        axios.get('https://burger-builder-b3dc6.firebaseio.com/ingredients.json')
+        .then(response=>{
+            this.setState({ingredients:response.data});
+        });
+    }
+
+
     purchasability=(price)=>{
         if(price<=4){
             this.setState({purchasable:true})
@@ -81,7 +91,29 @@ class BurgerBuilder extends React.Component{
     }
 
     purchaseContinueHandler=()=>{
-        alert('YOU CONTINUE!');
+        //alert('YOU CONTINUE!');
+        this.setState({loading:true});
+        const order={
+            ingredients:this.state.ingredients,
+            price:this.state.totalPrice,
+            customer:{
+                name:'Mangesh Upadhyay',
+                address:{
+                    houseno :"272/32",
+                    colony:'Vivek vihar',
+                    district:'Karauli',
+                    state:'Rajasthan'
+                }
+            },
+            deliveryMethod:'fastest'
+        }
+        axios.post('/orders.json',order)
+             .then(response=>{
+                this.setState({loading:false,purchasing:false});
+             })
+             .catch(error=>{
+                this.setState({loading:false,purchasing:false});
+             });
     }
     
 
@@ -91,7 +123,36 @@ class BurgerBuilder extends React.Component{
         for(let key in disabledInfo){
             disabledInfo[key]=disabledInfo[key]===0; //it will run a loop and check each key in ingredient state if disabledInfo will be less than equal to zero then diabledInfo[key] will be true or else it will be false
         };
+
+        let orderSummary=null;
+        
        
+        let burger=<Spinner/>
+        if(this.state.ingredients){
+            
+            burger=(
+            <div>
+                <Burger ingredients={this.state.ingredients}/> 
+                <BuildControls
+                disabled={disabledInfo}
+                orderdisability={this.state.purchasable}
+                ingredientAdded={this.addIngredientHandler}
+                ingredientRemoved={this.removeIngredientHandler}
+                price={this.state.totalPrice}
+                ordered={this.purchaseHandler}
+                />
+            </div>
+            );
+            if(this.state.loading){
+                orderSummary=(<Spinner/>);
+            }
+            else{
+            orderSummary=<OrderSummary 
+            ingredients={this.state.ingredients} 
+            purchaseCancelled={this.purchaseCancelHandler} 
+            purchaseContinued={this.purchaseContinueHandler} 
+            price={this.state.totalPrice}/>;}
+       }
         
         
         console.log(this.state.totalPrice);
@@ -99,25 +160,13 @@ class BurgerBuilder extends React.Component{
         return(
                 <div className='content'>
                     <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                        <OrderSummary 
-                        ingredients={this.state.ingredients} 
-                        purchaseCancelled={this.purchaseCancelHandler} 
-                        purchaseContinued={this.purchaseContinueHandler} 
-                        price={this.state.totalPrice}/>
+                        {orderSummary}
                     </Modal>
-                    <Burger ingredients={this.state.ingredients}/> 
-                    <BuildControls
-                    disabled={disabledInfo}
-                    orderdisability={this.state.purchasable}
-                    ingredientAdded={this.addIngredientHandler}
-                    ingredientRemoved={this.removeIngredientHandler}
-                    price={this.state.totalPrice}
-                    ordered={this.purchaseHandler}
-                    />
+                   {burger}
                     
                 </div>
         );
     }
 }
 
-export default BurgerBuilder ;
+export default withErrorHandler(BurgerBuilder,axios) ;

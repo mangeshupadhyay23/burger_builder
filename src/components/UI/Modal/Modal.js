@@ -13,7 +13,7 @@ class Modal extends React.Component{
 
         );
     }*/shouldComponentUpdate(nextProps,nextState){
-        if(nextProps.show!==this.props.show){  //this checks if next value is equal to old one or not   
+        if(nextProps.show!==this.props.show || nextProps.children!==this.props.children){  //this checks if next value is equal to old one or not   
         return true;
         }
         else{
