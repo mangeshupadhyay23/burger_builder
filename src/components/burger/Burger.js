@@ -1,9 +1,11 @@
 import React from 'react';
+
 import BurgerIngredient from './burger ingrident/BurgerIngredient';
 import './burger.css';
 
 
 const burger=(props)=>{
+    console.log(props);
     let transformedIngredients= Object.keys(props.ingredients)         //this is a fucntion defined in javascript not in react
     .map(igKey=>{
         console.log(igKey)
