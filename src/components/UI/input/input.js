@@ -4,7 +4,7 @@ import './input.css';
 const input=(props)=>{
 
     let inputElement=null;
-    switch(props.inputtype){
+    switch(props.elementType){
         case('input'):
             inputElement=<input className='InputElement' {...props.elementConfig} value={props.value}/>;
             break;
@@ -15,10 +15,12 @@ const input=(props)=>{
             inputElement=(
             <select
              className='InputElement'  
-             value={props.value}>
+             value={props.value}
+             onChange={props.changed}>
                 {props.elementConfig.options.map(option=>(
-                    <option value={option.value}>
-                        {option.displayValue}
+                    <option key={option.displayValue} 
+                    value={option.value}>
+                    {option.displayValue}
                         </option>
                 ))}
             </select>);
