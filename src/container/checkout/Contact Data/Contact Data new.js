@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import Success from '../../../components/UI/button/success button';
-
-import Spinner from '../../../components/UI/spinner/spinner';
-import  './Contact Data.css';
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import classes from './ContactData.css';
 import axios from '../../../axios-orders';
-import Input from '../../../components/UI/input/input';
+import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state = {
@@ -16,12 +15,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value: '',
-                validation:{
-                    required:true
-                },
-                valid:false,
-                touched:false
+                value: ''
             },
             street: {
                 elementType: 'input',
@@ -29,12 +23,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Street'
                 },
-                value: '',
-                validation:{
-                    required:true
-                },
-                valid:false,
-                touched:false
+                value: ''
             },
             zipCode: {
                 elementType: 'input',
@@ -42,14 +31,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'ZIP Code'
                 },
-                value: '',
-                validation:{
-                    required:true,
-                    minLength:5,
-                    maxLength:5
-                },
-                valid:false,
-                touched:false
+                value: ''
             },
             country: {
                 elementType: 'input',
@@ -57,12 +39,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Country'
                 },
-                value: '',
-                validation:{
-                    required:true
-                },
-                valid:false,
-                touched:false
+                value: ''
             },
             email: {
                 elementType: 'input',
@@ -70,12 +47,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your E-Mail'
                 },
-                value: '',
-                validation:{
-                    required:true
-                },
-                valid:false,
-                touched:false
+                value: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -90,19 +62,7 @@ class ContactData extends Component {
         },
         loading: false
     }
-    checkValidity(value,rules){
-        let isValid=false
-        if(rules.required){
-            isValid=value.trim()!=='' ;
-        }
-        if(rules.minLength){
-            isValid=value.length>=rules.minLength && isValid;
-        }
-        if(rules.minLength){
-            isValid=value.length<=rules.maxLength && isValid;
-        }
-        return isValid;
-    }
+
     orderHandler = ( event ) => {
         event.preventDefault();
         this.setState( { loading: true } );
@@ -133,10 +93,7 @@ class ContactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid=this.checkValidity(updatedFormElement.value,updatedFormElement.validation)
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        updatedFormElement.touched=true;
-        console.log(updatedFormElement)
         this.setState({orderForm: updatedOrderForm});
     }
 
@@ -152,25 +109,20 @@ class ContactData extends Component {
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
                     <Input 
-                        invalid={!formElement.config.valid}
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
-                        shouldValidate={formElement.config.validation}
-                        touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Success>ORDER</Success>
-               
-
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
         if ( this.state.loading ) {
             form = <Spinner />;
         }
         return (
-            <div className='ContactData'>
+            <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
                 {form}
             </div>
